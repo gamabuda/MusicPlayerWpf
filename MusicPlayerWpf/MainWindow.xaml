@@ -16,7 +16,7 @@
         <Menu Grid.Row="0">
             <MenuItem Header="File">
                 <MenuItem x:Name="OpenFileMI" Click="OpenFileMI_Click" Header="Open file"/>
-                <MenuItem Header="Open folder"/>
+                <MenuItem x:Name="OpenFolderMI" Click="OpenFolderMI_Click" Header="Open folder"/>
             </MenuItem>
             
             <MenuItem Header="View">
@@ -28,6 +28,7 @@
 
         <StackPanel Grid.Row="1">
             <Label x:Name="FileNameLb"/>
+            <DataGrid x:Name="FilesDG" ItemsSource="{Binding filesInfolders}" Height="200" AutoGenerateColumns="True"></DataGrid>
         </StackPanel>
 
         <Border Grid.Row="2" BorderBrush="Lime" BorderThickness="2" CornerRadius="5" Margin="5"> 
