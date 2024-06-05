@@ -87,6 +87,9 @@ namespace MusicPlayerWpf
             _player.Pause();
         }
 
-        
+        private void CloseBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
