@@ -16,7 +16,7 @@
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
     mc:Ignorable="d">
-    <Grid>
+    <Grid MouseDown="Window_MouseDown">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition />
@@ -59,11 +59,12 @@
             </Menu>
             <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Center">
                 <Button
+                    x:Name="MinimazieBtn"
                     Content="{materialDesign:PackIcon WindowMinimize}"
                     Foreground="White"
                     IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                     Style="{StaticResource MaterialDesignFlatButton}"
-                    ToolTip="Minimize window" />
+                    ToolTip="Minimize window" Click="MinimazieBtn_Click" />
                 <Button
                     Content="{materialDesign:PackIcon WindowRestore}"
                     Foreground="White"
