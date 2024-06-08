@@ -25,6 +25,9 @@ namespace MusicPlayerWpf
     {
         private MediaPlayer _player;
         List<FileInfo> filesInfolders = new List<FileInfo>();
+
+        public ExitCommandContext ExitCommandContext = new ExitCommandContext();
+        public ExitKey ExitKey = new ExitKey();
         public MainWindow()
         {
             InitializeComponent();
@@ -89,7 +92,7 @@ namespace MusicPlayerWpf
 
         private void CloseBtn_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            CloseWindow();
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -101,6 +104,55 @@ namespace MusicPlayerWpf
         private void MinimazieBtn_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
+        }
+
+        public void CloseWindow()
+        {
+            this.Close();
+        }
+
+        private void CommandBinding_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            System.Windows.MessageBox.Show("Close");
+        }
+    }
+
+    public class ExitKey : ICommand
+    {
+        public event EventHandler CanExecuteChanged;
+
+        public bool CanExecute(object parameter)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool CanExit(object parametr)
+        {
+            return true;
+        }
+
+        public void Execute(object parametr)
+        {
+           System.Windows.MessageBox.Show("Ctrl + Q = Exit");
+        }
+    }
+
+    public class ExitCommandContext
+    {
+        public ICommand ExitCommand
+        {
+            get
+            {
+                return new ExitKey();
+            }
+        }
+
+        public ICommand WrapCommand
+        {
+            get
+            {
+                return new ExitKey();
+            }
         }
     }
 }

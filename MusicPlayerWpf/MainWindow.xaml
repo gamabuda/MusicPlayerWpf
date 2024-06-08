@@ -16,6 +16,9 @@
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
     mc:Ignorable="d">
+    <Window.InputBindings>
+        <KeyBinding Key="E" Modifiers="Ctrl" Command="{x:Static ApplicationCommands.Close}"/>
+    </Window.InputBindings>
     <Grid MouseDown="Window_MouseDown">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -39,8 +42,13 @@
                     <Separator />
                     <MenuItem
                         Header="Exit"
+                        Command="{Binding ExitCommandContext}"
                         Icon="{materialDesign:PackIcon Kind=ExitToApp}"
-                        InputGestureText="Ctrl+E" />
+                        InputGestureText="Ctrl+E">
+                        <MenuItem.CommandBindings>
+                            <CommandBinding Command="{x:Static ApplicationCommands.Close}" Executed="CommandBinding_Executed"/>
+                        </MenuItem.CommandBindings>
+                    </MenuItem>
                 </MenuItem>
                 <MenuItem Header="_Edit">
                     <MenuItem
