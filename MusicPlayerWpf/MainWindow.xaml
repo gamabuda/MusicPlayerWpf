@@ -16,8 +16,17 @@
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
     mc:Ignorable="d">
+    <Window.CommandBindings>
+        <CommandBinding
+            CanExecute="CloseCommand_CanExecute"
+            Command="{x:Static local:MainWindow.CloseCommand}"
+            Executed="CloseCommand_Executed" />
+    </Window.CommandBindings>
     <Window.InputBindings>
-        <KeyBinding Key="E" Modifiers="Ctrl" Command="{x:Static ApplicationCommands.Close}"/>
+        <KeyBinding
+            Key="E"
+            Command="{x:Static local:MainWindow.CloseCommand}"
+            Modifiers="Ctrl" />
     </Window.InputBindings>
     <Grid MouseDown="Window_MouseDown">
         <Grid.RowDefinitions>
@@ -41,14 +50,10 @@
                     <MenuItem Header="Save playlist" Icon="{materialDesign:PackIcon Kind=ContentSave}" />
                     <Separator />
                     <MenuItem
+                        Command="{x:Static local:MainWindow.CloseCommand}"
                         Header="Exit"
-                        Command="{Binding ExitCommandContext}"
                         Icon="{materialDesign:PackIcon Kind=ExitToApp}"
-                        InputGestureText="Ctrl+E">
-                        <MenuItem.CommandBindings>
-                            <CommandBinding Command="{x:Static ApplicationCommands.Close}" Executed="CommandBinding_Executed"/>
-                        </MenuItem.CommandBindings>
-                    </MenuItem>
+                        InputGestureText="Ctrl+E" />
                 </MenuItem>
                 <MenuItem Header="_Edit">
                     <MenuItem
@@ -64,15 +69,22 @@
                         Header="_Paste"
                         Icon="{materialDesign:PackIcon Kind=ContentPaste}" />
                 </MenuItem>
+                <MenuItem Header="_View">
+                    <MenuItem
+                        Click="MenuItem_Click"
+                        Header="View task points"
+                        Icon="{materialDesign:PackIcon Kind=Help}" />
+                </MenuItem>
             </Menu>
             <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Center">
                 <Button
                     x:Name="MinimazieBtn"
+                    Click="MinimazieBtn_Click"
                     Content="{materialDesign:PackIcon WindowMinimize}"
                     Foreground="White"
                     IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                     Style="{StaticResource MaterialDesignFlatButton}"
-                    ToolTip="Minimize window" Click="MinimazieBtn_Click" />
+                    ToolTip="Minimize window" />
                 <Button
                     Content="{materialDesign:PackIcon WindowRestore}"
                     Foreground="White"
@@ -164,7 +176,7 @@
                     Click="PlayBtn_Click"
                     IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
                     Style="{StaticResource MaterialDesignFloatingActionMiniButton}"
-                    ToolTip="MaterialDesignFloatingActionMiniButton">
+                    ToolTip="Play">
                     <materialDesign:PackIcon Kind="Play" />
                 </Button>
             </Grid>

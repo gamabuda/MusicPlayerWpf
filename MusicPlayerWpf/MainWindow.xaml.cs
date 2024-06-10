@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
 
 namespace MusicPlayerWpf
 {
@@ -26,8 +27,8 @@ namespace MusicPlayerWpf
         private MediaPlayer _player;
         List<FileInfo> filesInfolders = new List<FileInfo>();
 
-        public ExitCommandContext ExitCommandContext = new ExitCommandContext();
-        public ExitKey ExitKey = new ExitKey();
+        public static RoutedCommand CloseCommand = new RoutedCommand();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -39,19 +40,13 @@ namespace MusicPlayerWpf
 
         private void OpenFileMI_Click(object sender, RoutedEventArgs e)
         {
-            Microsoft.Win32.OpenFileDialog fileDialog = new Microsoft.Win32.OpenFileDialog
+            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
+            openFileDialog.Filter = "MP3 files (*.mp3)|*.mp3";
+            if (openFileDialog.ShowDialog() == true)
             {
-                DefaultExt = ".mp3",
-                Multiselect = false
-            };
-
-            bool? fileDialogOk = fileDialog.ShowDialog();
-
-            if (fileDialogOk == true) {
-                var name = fileDialog.FileName.Split('\\').Last();
-                var filename = fileDialog.FileName;
-                FileNameLb.Content = $"File: {name} now start to play!";
-                _player.Open(new Uri(filename));
+                ReadMP3File(openFileDialog.FileName);
+                FileNameLb.Content = $"File: {openFileDialog.FileName} now start to play!";
+                _player.Open(new Uri(openFileDialog.FileName));
             }
         }
 
@@ -115,44 +110,48 @@ namespace MusicPlayerWpf
         {
             System.Windows.MessageBox.Show("Close");
         }
-    }
 
-    public class ExitKey : ICommand
-    {
-        public event EventHandler CanExecuteChanged;
-
-        public bool CanExecute(object parameter)
+        // TagLibSharp NuGet Package
+        private void ReadMP3File(string filePath)
         {
-            throw new NotImplementedException();
-        }
+            var file = TagLib.File.Create(filePath);
 
-        public bool CanExit(object parametr)
-        {
-            return true;
-        }
+            // Получение длины трека
+            TimeSpan duration = file.Properties.Duration;
 
-        public void Execute(object parametr)
-        {
-           System.Windows.MessageBox.Show("Ctrl + Q = Exit");
-        }
-    }
+            // Получение артиста
+            string artist = file.Tag.FirstAlbumArtist ?? file.Tag.FirstArtist ?? "Unknown Artist";
 
-    public class ExitCommandContext
-    {
-        public ICommand ExitCommand
-        {
-            get
+            // Получение названия трека
+            string title = file.Tag.Title ?? "Unknown Title";
+
+            // Получение обложки
+            var pictures = file.Tag.Pictures;
+            if (pictures.Length > 0)
             {
-                return new ExitKey();
+                var coverData = pictures[0].Data.Data;
+                // Обработка обложки (например, показать в UI)
+                // Для этого можно использовать coverData для создания изображения
             }
+
+            // Вывод информации (можно и нужно адаптировать под ваш интерфейс)
+            System.Windows.MessageBox.Show($"Title: {title}\nArtist: {artist}\nDuration: {duration}");
         }
 
-        public ICommand WrapCommand
+        private void CloseCommand_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            get
-            {
-                return new ExitKey();
-            }
+            this.Close();
+        }
+
+        private void CloseCommand_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = true;
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.MessageBox.Show($"Commits >= 3: 1 pont\nCustom disign: 1 point\nPlayer can play & work correctly: 2 point\nHot keys: 1 point\nLoad mp3 info & image: 1 point\n*Can choose track from folder: 1 point\n*Save new playlist: 1 point", 
+                "Points total: 8 points", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }
