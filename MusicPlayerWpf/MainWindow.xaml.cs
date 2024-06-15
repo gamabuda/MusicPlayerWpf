@@ -153,5 +153,10 @@ namespace MusicPlayerWpf
             System.Windows.MessageBox.Show($"Commits >= 3: 1 pont\nCustom disign: 1 point\nPlayer can play & work correctly: 2 point\nHot keys: 1 point\nLoad mp3 info & image: 1 point\n*Can choose track from folder: 1 point\n*Save new playlist: 1 point", 
                 "Points total: 8 points", MessageBoxButton.OK, MessageBoxImage.Information);
         }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            new PianoWindow().Show();
+        }
     }
 }

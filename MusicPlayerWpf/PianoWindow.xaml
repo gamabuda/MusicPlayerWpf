@@ -1,0 +1,40 @@
+﻿<Window x:Class="MusicPlayerWpf.PianoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MusicPlayerWpf"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="PianoWindow" Height="350" Width="600">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        <materialDesign:Card Grid.Row="0">
+            <Label Margin="14" Content="Class Console have method Beep()"/>
+        </materialDesign:Card>
+        
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="0" Height="auto" Click="Button_Click"/>
+            <Button Grid.Column="1" Height="auto" Background="White" Click="Button_Click_1"/>
+            <Button Grid.Column="2" Height="auto" Click="Button_Click_2"/>
+            <Button Grid.Column="3" Height="auto" Background="White" Click="Button_Click_3"/>
+            <Button Grid.Column="4" Height="auto" Click="Button_Click_4"/>
+            <Button Grid.Column="5" Height="auto" Background="White" Click="Button_Click_5"/>
+            <Button Grid.Column="6" Height="auto" Click="Button_Click_6" Cursor="Hand"/>
+        </Grid>
+    </Grid>
+</Window>

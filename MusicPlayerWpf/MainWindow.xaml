@@ -74,6 +74,10 @@
                         Click="MenuItem_Click"
                         Header="View task points"
                         Icon="{materialDesign:PackIcon Kind=Help}" />
+                    <MenuItem
+                        Click="MenuItem_Click_1"
+                        Header="View piano"
+                        Icon="{materialDesign:PackIcon Kind=Help}" />
                 </MenuItem>
             </Menu>
             <WrapPanel HorizontalAlignment="Right" VerticalAlignment="Center">
