@@ -59,4 +59,5 @@ namespace MusicPlayerWpf
         {
             Console.Beep(rnd.Next(37, 1000), rnd.Next(37, 1000));
         }
+    }
 }
